@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.my.mywebapp.shared.models.People;
 import com.my.mywebapp.server.services.PeopleService;
@@ -35,4 +36,11 @@ public class PeopleController {
         List<People> peoples = peopleService.findAllPeoples();
         return peoples;
     }
+    @RequestMapping(value = "/rest/save/",method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void save(@RequestParam String surname, @RequestParam String name, @RequestParam String patr) {
+        People ppp = new People(surname,name,patr);
+        peopleService.savePeople(ppp);
+    }
+
 }

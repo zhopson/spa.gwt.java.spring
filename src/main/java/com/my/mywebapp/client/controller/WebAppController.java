@@ -74,4 +74,38 @@ public class WebAppController {
 		}
 
     }
+    public void savePeople(String pSurname, String pName, String pPatr) {
+		String pageBaseUrl = GWT.getHostPageBaseURL();
+		// String baseUrl = GWT.getModuleBaseURL();
+		RequestBuilder rb = new RequestBuilder(RequestBuilder.POST, pageBaseUrl + "rest/save/");
+                rb.setHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+                StringBuilder params = new StringBuilder();
+                params.append("surname="+pSurname);
+                params.append("&name="+pName);
+                params.append("&patr="+pPatr);
+                rb.setRequestData(params.toString());
+
+		rb.setCallback(new RequestCallback() {
+
+			public void onError(Request request, Throwable e) {
+				// some error handling code here
+				Window.alert("error = " + e.getMessage());
+			}
+
+			public void onResponseReceived(Request request, Response response) {
+				if (201 == response.getStatusCode()) {
+                                    loadPeopleList();
+				}
+                            //Window.alert("response statusCode = " + response.getStatusCode());
+			}
+		});
+		try {
+			rb.send();
+		} catch (RequestException e) {
+			e.printStackTrace();
+			Window.alert("error = " + e.getMessage());
+		}
+
+    }
 }

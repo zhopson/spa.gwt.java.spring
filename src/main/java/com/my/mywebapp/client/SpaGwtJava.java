@@ -104,7 +104,7 @@ public class SpaGwtJava implements EntryPoint {
 //    CTable.InitTableExample(cntrl.GetList()); // 2
 //проблема в WebAppController 1 4 5 2 3
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+// Получение Списка сотрудников с БД
     WebAppController cntrl = new WebAppController(CTable);
     cntrl.loadPeopleList();
 
@@ -159,11 +159,19 @@ public class SpaGwtJava implements EntryPoint {
 
         RootPanel.get("EditFormContainer").add(vp);
         RootPanel.get("EditFormContainer").add(hp1);
-
 //        fictionButton.fireEvent(new ClickEvent() { } );
+      }
+    });
+    // Add a handler to save new people
+    sendButton.addClickHandler(new ClickHandler() {
+      public void onClick(ClickEvent event) {
 
-//        cntrl.loadPeopleList();
-//        CTable.InitTableExample(cntrl.GetList());
+        String surnameToServer = surnameField.getText();
+        String nameToServer = nameField.getText();
+        String patrToServer = patrField.getText();
+
+        cntrl.savePeople(surnameToServer, nameToServer, patrToServer);
+        RootPanel.get("EditFormContainer").clear();
       }
     });
     // Add a handler to hide edit form
@@ -195,67 +203,68 @@ public class SpaGwtJava implements EntryPoint {
       }
     });
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Create a handler for the sendButton and nameField
-    class MyHandler implements ClickHandler, KeyUpHandler {
-      /**
-       * Fired when the user clicks on the sendButton.
-       */
-      public void onClick(ClickEvent event) {
-        sendNameToServer();
-        RootPanel.get("EditFormContainer").clear();
-      }
-
-      /**
-       * Fired when the user types in the nameField.
-       */
-      public void onKeyUp(KeyUpEvent event) {
-        if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-          sendNameToServer();
-        }
-      }
-
-      /**
-       * Send the name from the nameField to the server and wait for a response.
-       */
-      private void sendNameToServer() {
-        // First, we validate the input.
-        errorLabel.setText("");
-        String textToServer = nameField.getText();
-        if (!FieldVerifier.isValidName(textToServer)) {
-          errorLabel.setText("Please enter at least four characters");
-          return;
-        }
-        
-        // Then, we send the input to the server.
-        sendButton.setEnabled(false);
-        textToServerLabel.setText(textToServer);
-        serverResponseLabel.setText("");
-        greetingService.greetServer(textToServer, new AsyncCallback<String>() {
-          public void onFailure(Throwable caught) {
-            // Show the RPC error message to the user
-            dialogBox.setText("Remote Procedure Call - Failure");
-            serverResponseLabel.addStyleName("serverResponseLabelError");
-            serverResponseLabel.setHTML(SERVER_ERROR);
-            dialogBox.center();
-            closeButton.setFocus(true);
-          }
-
-          public void onSuccess(String result) {
-            dialogBox.setText("Remote Procedure Call");
-            serverResponseLabel.removeStyleName("serverResponseLabelError");
-            serverResponseLabel.setHTML(result);
-            dialogBox.center();
-            closeButton.setFocus(true);
-          }
-        });
-      }
-    }
-
-    // Add a handler to send the name to the server
-    MyHandler handler = new MyHandler();
-    sendButton.addClickHandler(handler);
-    nameField.addKeyUpHandler(handler);
+//    class MyHandler implements ClickHandler, KeyUpHandler {
+//      /**
+//       * Fired when the user clicks on the sendButton.
+//       */
+//      public void onClick(ClickEvent event) {
+//        sendNameToServer();
+//        RootPanel.get("EditFormContainer").clear();
+//      }
+//
+//      /**
+//       * Fired when the user types in the nameField.
+//       */
+//      public void onKeyUp(KeyUpEvent event) {
+//        if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+//          sendNameToServer();
+//        }
+//      }
+//
+//      /**
+//       * Send the name from the nameField to the server and wait for a response.
+//       */
+//      private void sendNameToServer() {
+//        // First, we validate the input.
+//        errorLabel.setText("");
+//        String textToServer = nameField.getText();
+//        if (!FieldVerifier.isValidName(textToServer)) {
+//          errorLabel.setText("Please enter at least four characters");
+//          return;
+//        }
+//        
+//        // Then, we send the input to the server.
+//        sendButton.setEnabled(false);
+//        textToServerLabel.setText(textToServer);
+//        serverResponseLabel.setText("");
+//        greetingService.greetServer(textToServer, new AsyncCallback<String>() {
+//          public void onFailure(Throwable caught) {
+//            // Show the RPC error message to the user
+//            dialogBox.setText("Remote Procedure Call - Failure");
+//            serverResponseLabel.addStyleName("serverResponseLabelError");
+//            serverResponseLabel.setHTML(SERVER_ERROR);
+//            dialogBox.center();
+//            closeButton.setFocus(true);
+//          }
+//
+//          public void onSuccess(String result) {
+//            dialogBox.setText("Remote Procedure Call");
+//            serverResponseLabel.removeStyleName("serverResponseLabelError");
+//            serverResponseLabel.setHTML(result);
+//            dialogBox.center();
+//            closeButton.setFocus(true);
+//          }
+//        });
+//      }
+//    }
+//
+//    // Add a handler to send the name to the server
+//    MyHandler handler = new MyHandler();
+//    sendButton.addClickHandler(handler);
+//    nameField.addKeyUpHandler(handler);
 
   }
 
