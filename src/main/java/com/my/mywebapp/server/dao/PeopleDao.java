@@ -44,9 +44,9 @@ public class PeopleDao {
         session.close();
     }
 
-    public People findAutoById(int id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(People.class, id);
-    }
+//    public People findPeopleById(int id) {
+//        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(People.class, id);
+//    }
 
     public List<People> findAll() {
         List<People> peoples = (List<People>)  HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From People").list();

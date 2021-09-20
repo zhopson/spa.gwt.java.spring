@@ -27,7 +27,12 @@ h1 {
 .serverResponseLabelError {
   color: red;
 }
-
+.headerText {
+	font-family: arial, sans-serif;
+	font-weight: bold;
+	font-size: 1em;
+	padding: 2px;
+}
 /** Set ids using widget.getElement().setId("idOfElement") */
 #closeButton {
   margin: 15px 6px 6px;

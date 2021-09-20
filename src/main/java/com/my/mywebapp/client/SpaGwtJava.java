@@ -43,6 +43,8 @@ public class SpaGwtJava implements EntryPoint {
    */
   private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 
+    private boolean IsEditMode = false;
+
   /**
    * This is the entry point method.
    */
@@ -53,7 +55,6 @@ public class SpaGwtJava implements EntryPoint {
     final Button EditButton = new Button("Изменить данные");
     final Button DelButton = new Button("Удалить");
     final Button cancelButton = new Button("Отмена");
-    final Button fictionButton = new Button("Фикция");
     
     final TextBox surnameField = new TextBox();
     surnameField.setText("Петров");
@@ -65,6 +66,10 @@ public class SpaGwtJava implements EntryPoint {
     final Label errorLabel = new Label();
     final Label cLabel = new Label();
     cLabel.setText("Введите данные:");
+    final Label newLabel = new Label();
+    newLabel.setText("Новая запись:");
+    final Label editLabel = new Label();
+    editLabel.setText("Редактирование записи:");
 
     // We can add style names to widgets
     sendButton.addStyleName("sendButton");
@@ -72,19 +77,20 @@ public class SpaGwtJava implements EntryPoint {
     EditButton.addStyleName("sendButton");
     DelButton.addStyleName("sendButton");
     cancelButton.addStyleName("sendButton");
-    fictionButton.addStyleName("sendButton");
+    newLabel.addStyleName("headerText");
+    editLabel.addStyleName("headerText");
 
     final HorizontalPanel hp = new HorizontalPanel();
     hp.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
     hp.add(NewButton);
     hp.add(EditButton);
     hp.add(DelButton);
-    hp.add(fictionButton);
 
     RootPanel.get("ToolBoxContainer").add(hp);
 
     final VerticalPanel vp = new VerticalPanel();
     //vp.setVerticalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+
     vp.add(cLabel);
     vp.add(surnameField);
     vp.add(nameField);
@@ -143,13 +149,13 @@ public class SpaGwtJava implements EntryPoint {
       }
     });
     // Add a handler to show new form
-    fictionButton.addClickHandler(new ClickHandler() {
-      public void onClick(ClickEvent event) {
-//        WebAppController cntrl = new WebAppController();
-//        cntrl.loadPeopleList();
-//        CTable.InitTableExample(cntrl.GetList());
-      }
-    });
+//    fictionButton.addClickHandler(new ClickHandler() {
+//      public void onClick(ClickEvent event) {
+////        WebAppController cntrl = new WebAppController();
+////        cntrl.loadPeopleList();
+////        CTable.InitTableExample(cntrl.GetList());
+//      }
+//    });
     // Add a handler to show new form
     NewButton.addClickHandler(new ClickHandler() {
       public void onClick(ClickEvent event) {
@@ -160,9 +166,13 @@ public class SpaGwtJava implements EntryPoint {
         RootPanel.get("EditFormContainer").add(vp);
         RootPanel.get("EditFormContainer").add(hp1);
 //        fictionButton.fireEvent(new ClickEvent() { } );
+        IsEditMode = false;
+        RootPanel.get("opLabelContainer").clear();
+        RootPanel.get("opLabelContainer").add(newLabel);
+//        Window.alert("edit: " + IsEditMode);       
       }
     });
-    // Add a handler to save new people
+    // Add a handler to save new/update people
     sendButton.addClickHandler(new ClickHandler() {
       public void onClick(ClickEvent event) {
 
@@ -170,26 +180,41 @@ public class SpaGwtJava implements EntryPoint {
         String nameToServer = nameField.getText();
         String patrToServer = patrField.getText();
 
-        cntrl.savePeople(surnameToServer, nameToServer, patrToServer);
+        if (IsEditMode) {
+            int id = CTable.GetSid();
+            //Window.alert("edit id: " + id);
+            cntrl.updatePeople(id, surnameToServer, nameToServer, patrToServer);            
+        } else {
+            cntrl.savePeople(surnameToServer, nameToServer, patrToServer);
+        }
         RootPanel.get("EditFormContainer").clear();
+        RootPanel.get("opLabelContainer").clear();
       }
     });
     // Add a handler to hide edit form
     cancelButton.addClickHandler(new ClickHandler() {
       public void onClick(ClickEvent event) {
         RootPanel.get("EditFormContainer").clear();
+        RootPanel.get("opLabelContainer").clear();
       }
     });
     // Add a handler to show edit form  
     EditButton.addClickHandler(new ClickHandler() {
       public void onClick(ClickEvent event) {
         if (!CTable.GetSsurname().equals("")) {
-        surnameField.setText(CTable.GetSsurname());
-        nameField.setText(CTable.GetSname());
-        patrField.setText(CTable.GetSpatr());    
+            surnameField.setText(CTable.GetSsurname());
+            nameField.setText(CTable.GetSname());
+            patrField.setText(CTable.GetSpatr());    
 
-        RootPanel.get("EditFormContainer").add(vp);
-        RootPanel.get("EditFormContainer").add(hp1);
+            RootPanel.get("EditFormContainer").add(vp);
+            RootPanel.get("EditFormContainer").add(hp1);
+            
+            IsEditMode = true;
+//            Window.alert("edit: " + IsEditMode);
+        RootPanel.get("opLabelContainer").clear();
+        RootPanel.get("opLabelContainer").add(editLabel);
+
+
         }
       }
     });
@@ -197,8 +222,9 @@ public class SpaGwtJava implements EntryPoint {
     DelButton.addClickHandler(new ClickHandler() {
       public void onClick(ClickEvent event) {
         if (!CTable.GetSsurname().equals("")) {
-        Window.alert(
-          "Selected to delete: surname: " + CTable.GetSsurname() + ", id: " + CTable.GetSid());
+            int id = CTable.GetSid();
+            //Window.alert("edit id: " + id);
+            cntrl.deletePeople(id);
         }
       }
     });

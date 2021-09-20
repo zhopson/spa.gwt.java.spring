@@ -105,9 +105,9 @@ public class CellTableExample {
 					Ssurname = selectedContact.getSurname();
 					Sname = selectedContact.getName();
 					Spatr = selectedContact.getPatronymic();	
-					Window.alert(
-							"Selected: surname: " + selectedContact.getSurname() + ", Second col: " + selectedContact.getName() + ", id col: " + selectedContact.getId());
+//					Window.alert("Selected: surname: " + selectedContact.getSurname() + ", Second col: " + selectedContact.getName() + ", id col: " + selectedContact.getId());
 					RootPanel.get("EditFormContainer").clear();
+                                        RootPanel.get("opLabelContainer").clear();
 				}
 			}
 		});
@@ -117,6 +117,9 @@ public class CellTableExample {
 	}
 
         public void InitTableExample(List<PeopleList> lst) {
+
+                //table.setRowCount(0, true);
+
                 peopleList =  lst;
 
 		// Create a data provider.
@@ -133,14 +136,14 @@ public class CellTableExample {
 //                List<PeopleList> tmp = cntrl.GetList();
 
                 //Window.alert(tmp);
-                String str="3 TABLE adding data:";
+                //String str="3 TABLE adding data:";
                 if (!peopleList.isEmpty()) {
                     for (PeopleList contact : peopleList) {
                             list.add(contact);
-                            str = str + contact.getSurname();
+                            //str = str + contact.getSurname();
                     }
                 }
-                Window.alert(str);
+                //Window.alert(str);
 
 		// Add a ColumnSortEvent.ListHandler to connect sorting to the
 		// java.util.List.
@@ -162,6 +165,11 @@ public class CellTableExample {
 
 		// We know that the data is sorted alphabetically by default.
 		table.getColumnSortList().push(table.getColumn(0));
+
+		Sid = 0;
+		Ssurname = "";
+		Sname = "";
+		Spatr = "";
 
         }
 

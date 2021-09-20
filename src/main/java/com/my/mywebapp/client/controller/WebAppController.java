@@ -33,12 +33,12 @@ public class WebAppController {
     public WebAppController(CellTableExample pCTable) {
         CTable = pCTable;
         lst = new ArrayList<PeopleList>(); 
-        Window.alert("1 Controller constructor list = " + lst);
+        //Window.alert("1 Controller constructor list = " + lst);
 //        lst = new List<People>();
     }
 //пока не используется
     public List<PeopleList> GetList() {
-        Window.alert("4 Controller GetList list = " + lst);
+        //Window.alert("4 Controller GetList list = " + lst);
         return lst;
     }
 
@@ -58,11 +58,11 @@ public class WebAppController {
 					String text = response.getText();
 					// some code to further handle the response here
 					System.out.println("text = " + text);
-					Window.alert("2 Сontroller response = " + text);
+					//Window.alert("2 Сontroller response = " + text);
 					lst = JsonHelper.parseDataList(text);
                                         CTable.InitTableExample(lst);
                                         //if (lst.isEmpty()) lst = new ArrayList<PeopleList>(); 
-                                        Window.alert("4 Сontroller loadPeopleList lst = " + lst);
+                                        //Window.alert("4 Сontroller loadPeopleList lst = " + lst);
 				}
 			}
 		});
@@ -108,4 +108,72 @@ public class WebAppController {
 		}
 
     }
+    public void updatePeople(int pId, String pSurname, String pName, String pPatr) {
+		String pageBaseUrl = GWT.getHostPageBaseURL();
+		// String baseUrl = GWT.getModuleBaseURL();
+		RequestBuilder rb = new RequestBuilder(RequestBuilder.POST, pageBaseUrl + "rest/update/");
+                rb.setHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+                StringBuilder params = new StringBuilder();
+                params.append("id="+pId);
+                params.append("&surname="+pSurname);
+                params.append("&name="+pName);
+                params.append("&patr="+pPatr);
+                rb.setRequestData(params.toString());
+
+		rb.setCallback(new RequestCallback() {
+
+			public void onError(Request request, Throwable e) {
+				// some error handling code here
+				Window.alert("error = " + e.getMessage());
+			}
+
+			public void onResponseReceived(Request request, Response response) {
+				if (204 == response.getStatusCode()) {
+                                    loadPeopleList();
+				}
+                            //Window.alert("response statusCode = " + response.getStatusCode());
+			}
+		});
+		try {
+			rb.send();
+		} catch (RequestException e) {
+			e.printStackTrace();
+			Window.alert("error = " + e.getMessage());
+		}
+
+    }
+    public void deletePeople(int pId) {
+		String pageBaseUrl = GWT.getHostPageBaseURL();
+		// String baseUrl = GWT.getModuleBaseURL();
+		RequestBuilder rb = new RequestBuilder(RequestBuilder.POST, pageBaseUrl + "rest/delete/");
+                rb.setHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+                StringBuilder params = new StringBuilder();
+                params.append("id="+pId);
+                rb.setRequestData(params.toString());
+
+		rb.setCallback(new RequestCallback() {
+
+			public void onError(Request request, Throwable e) {
+				// some error handling code here
+				Window.alert("error = " + e.getMessage());
+			}
+
+			public void onResponseReceived(Request request, Response response) {
+				if (204 == response.getStatusCode()) {
+                                    loadPeopleList();
+				}
+                            //Window.alert("response statusCode = " + response.getStatusCode());
+			}
+		});
+		try {
+			rb.send();
+		} catch (RequestException e) {
+			e.printStackTrace();
+			Window.alert("error = " + e.getMessage());
+		}
+
+    }
+
 }
