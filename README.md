@@ -1,28 +1,7 @@
-spring-boot-gwt
-===============
+SPA GWT SPRING BOOT Test APP
+============================
 
-A quickstart spring boot gwt application (Spring Boot 1.4.1, GWT 2.8)
-
-## GWT Developer Console
-
-Use the GWT console with : 
-- mvn gwt:run
-- mvn gwt:debug
-or simply use mvn install as useal
-
-
-## What's in the sources
-
-Quick dive in the code :
-
-- fr.ekito.gwt.server for server side code
-- fr.ekito.gwt.client for GWT client side code
-- fr.ekito.gwt.client.controller contains Client Http Rest controller
-
-The application is build uppon Google Gin 
-
-## More details
-
-More details about the project on Ekito's blog :  http://www.ekito.fr/people/?p=4816
-
-
+Spring boot
+Hibernate
+Postgres
+Maven
