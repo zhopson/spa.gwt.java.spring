@@ -2,7 +2,7 @@ package com.my.mywebapp.client;
 
 import com.my.mywebapp.shared.FieldVerifier;
 import com.my.mywebapp.client.ui.CellTableExample;
-//import com.my.mywebapp.shared.models.PeopleList;
+import com.my.mywebapp.shared.models.PeopleList;
 import com.my.mywebapp.client.controller.WebAppController;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -25,7 +25,8 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.Window;
-
+import com.google.gwt.view.client.ListDataProvider;
+import java.util.List;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
@@ -118,36 +119,36 @@ public class SpaGwtJava implements EntryPoint {
     RootPanel.get("TableContainer").add(tab);
 
     // Focus the cursor on the name field when the app loads
-    nameField.setFocus(true);
-    nameField.selectAll();
+//    nameField.setFocus(true);
+//    nameField.selectAll();
 
     // Create the popup dialog box
-    final DialogBox dialogBox = new DialogBox();
-    dialogBox.setText("Remote Procedure Call");
-    dialogBox.setAnimationEnabled(true);
-    final Button closeButton = new Button("Close");
-    // We can set the id of a widget by accessing its Element
-    closeButton.getElement().setId("closeButton");
-    final Label textToServerLabel = new Label();
-    final HTML serverResponseLabel = new HTML();
-    VerticalPanel dialogVPanel = new VerticalPanel();
-    dialogVPanel.addStyleName("dialogVPanel");
-    dialogVPanel.add(new HTML("<b>Sending name to the server:</b>"));
-    dialogVPanel.add(textToServerLabel);
-    dialogVPanel.add(new HTML("<br><b>Server replies:</b>"));
-    dialogVPanel.add(serverResponseLabel);
-    dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-    dialogVPanel.add(closeButton);
-    dialogBox.setWidget(dialogVPanel);
+//    final DialogBox dialogBox = new DialogBox();
+//    dialogBox.setText("Remote Procedure Call");
+//    dialogBox.setAnimationEnabled(true);
+//    final Button closeButton = new Button("Close");
+//    // We can set the id of a widget by accessing its Element
+//    closeButton.getElement().setId("closeButton");
+//    final Label textToServerLabel = new Label();
+//    final HTML serverResponseLabel = new HTML();
+//    VerticalPanel dialogVPanel = new VerticalPanel();
+//    dialogVPanel.addStyleName("dialogVPanel");
+//    dialogVPanel.add(new HTML("<b>Sending name to the server:</b>"));
+//    dialogVPanel.add(textToServerLabel);
+//    dialogVPanel.add(new HTML("<br><b>Server replies:</b>"));
+//    dialogVPanel.add(serverResponseLabel);
+//    dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
+//    dialogVPanel.add(closeButton);
+//    dialogBox.setWidget(dialogVPanel);
 
     // Add a handler to close the DialogBox
-    closeButton.addClickHandler(new ClickHandler() {
-      public void onClick(ClickEvent event) {
-        dialogBox.hide();
-        sendButton.setEnabled(true);
-        sendButton.setFocus(true);
-      }
-    });
+//    closeButton.addClickHandler(new ClickHandler() {
+//      public void onClick(ClickEvent event) {
+//        dialogBox.hide();
+//        sendButton.setEnabled(true);
+//        sendButton.setFocus(true);
+//      }
+//    });
     // Add a handler to show new form
 //    fictionButton.addClickHandler(new ClickHandler() {
 //      public void onClick(ClickEvent event) {
@@ -225,6 +226,16 @@ public class SpaGwtJava implements EntryPoint {
             int id = CTable.GetSid();
             //Window.alert("edit id: " + id);
             cntrl.deletePeople(id);
+            ListDataProvider<PeopleList> dataProvider =  CTable.GetDataProvider();
+            List<PeopleList> list = dataProvider.getList();
+//            PeopleList match = list.stream().findFirst(u -> u.getSurname().equals(CTable.GetSsurname())).get();
+            PeopleList match = list.stream().filter(u -> u.getSurname().equals(CTable.GetSsurname()) && u.getName().equals(CTable.GetSname())).findFirst().orElse(null);
+            //Window.alert("match: " + match);
+            if (match != null) {
+                int indexOf = list.indexOf(match);
+                list.remove(indexOf);
+                dataProvider.refresh();
+            }
         }
       }
     });

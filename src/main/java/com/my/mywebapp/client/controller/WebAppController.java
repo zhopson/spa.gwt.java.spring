@@ -13,6 +13,8 @@ import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.cellview.client.CellTable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,14 +23,13 @@ import com.my.mywebapp.shared.models.PeopleList;
 import com.my.mywebapp.client.json.JsonHelper;
 import com.my.mywebapp.client.ui.CellTableExample;
 
-
 /**
  *
  * @author MikhailovAN
  */
 public class WebAppController {
     private List<PeopleList> lst;
-    CellTableExample CTable;
+    private CellTableExample CTable;
 
     public WebAppController(CellTableExample pCTable) {
         CTable = pCTable;
@@ -61,7 +62,7 @@ public class WebAppController {
 					//Window.alert("2 Сontroller response = " + text);
 					lst = JsonHelper.parseDataList(text);
                                         CTable.InitTableExample(lst);
-                                        //if (lst.isEmpty()) lst = new ArrayList<PeopleList>(); 
+                                        CTable.AddSorting();
                                         //Window.alert("4 Сontroller loadPeopleList lst = " + lst);
 				}
 			}
@@ -163,6 +164,10 @@ public class WebAppController {
 			public void onResponseReceived(Request request, Response response) {
 				if (204 == response.getStatusCode()) {
                                     loadPeopleList();
+//                                    CellTable tab = CTable.GetTable();
+//                                    tab.setRowCount(lst.size()-1, true);
+//                                    tab.redraw();
+//                                    Window.alert("row count = " + tab.getRowCount());
 				}
                             //Window.alert("response statusCode = " + response.getStatusCode());
 			}

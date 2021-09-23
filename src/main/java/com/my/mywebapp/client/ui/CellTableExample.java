@@ -12,6 +12,8 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.event.shared.HandlerRegistration;
+
 import com.my.mywebapp.shared.models.PeopleList;
 import com.my.mywebapp.client.controller.WebAppController;
 
@@ -30,6 +32,10 @@ public class CellTableExample {
         private List<PeopleList> peopleList = Arrays.asList();
 
 	private CellTable<PeopleList> table;
+
+        private ListDataProvider<PeopleList> dataProvider;
+
+        private HandlerRegistration sortHandler;
 
 	public CellTableExample() {
 
@@ -119,11 +125,14 @@ public class CellTableExample {
         public void InitTableExample(List<PeopleList> lst) {
 
                 //table.setRowCount(0, true);
+//                Window.alert("table row count:" + table.getRowCount() + ", list rec count:" + lst.size()); 
+//                if (table.getRowCount() > lst.size() )  table.setRowCount(lst.size(), true);
+//                Window.alert("table row count:" + table.getRowCount() + ", list rec count:" + lst.size()); 
 
                 peopleList =  lst;
 
 		// Create a data provider.
-		ListDataProvider<PeopleList> dataProvider = new ListDataProvider<PeopleList>();
+		dataProvider = new ListDataProvider<PeopleList>();
 
 		// Connect the table to the data provider.
 		dataProvider.addDataDisplay(table);
@@ -131,9 +140,7 @@ public class CellTableExample {
 		// Add the data to the data provider, which automatically pushes it to the
 		// widget.
 		List<PeopleList> list = dataProvider.getList();
-
-                //List<PeopleList> tmp = Arrays.asList();
-//                List<PeopleList> tmp = cntrl.GetList();
+                //dataProvider.refresh();
 
                 //Window.alert(tmp);
                 //String str="3 TABLE adding data:";
@@ -145,6 +152,27 @@ public class CellTableExample {
                 }
                 //Window.alert(str);
 
+		Sid = 0;
+		Ssurname = "";
+		Sname = "";
+		Spatr = "";
+
+        }
+
+	public CellTable GetTable() {
+		return table;
+	}
+
+	public ListDataProvider<PeopleList> GetDataProvider() {
+		return dataProvider;
+	}
+
+        public void AddSorting(){
+                
+                table.redraw();
+                List<PeopleList> list = dataProvider.getList();
+
+                if (sortHandler!= null) sortHandler.removeHandler();
 		// Add a ColumnSortEvent.ListHandler to connect sorting to the
 		// java.util.List.
 		ListHandler<PeopleList> columnSortHandler = new ListHandler<PeopleList>(list);
@@ -161,21 +189,12 @@ public class CellTableExample {
 				return -1;
 			}
 		});
-		table.addColumnSortHandler(columnSortHandler);
+		sortHandler = table.addColumnSortHandler(columnSortHandler);
 
 		// We know that the data is sorted alphabetically by default.
 		table.getColumnSortList().push(table.getColumn(0));
 
-		Sid = 0;
-		Ssurname = "";
-		Sname = "";
-		Spatr = "";
-
         }
-
-	public CellTable GetTable() {
-		return table;
-	}
 
 //	public List<PeopleList> SetPeopleList() {
 //		return peopleList;
