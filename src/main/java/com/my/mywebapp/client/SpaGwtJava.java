@@ -26,6 +26,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.view.client.ListDataProvider;
+import com.google.gwt.user.cellview.client.SimplePager;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import java.util.List;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -103,7 +105,7 @@ public class SpaGwtJava implements EntryPoint {
     hp1.add(cancelButton);
 
     final CellTableExample CTable = new CellTableExample();
-    CellTable tab = CTable.GetTable();
+    //CellTable tab = CTable.GetTable();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //такой вариант не работает:
 //    WebAppController cntrl = new WebAppController(); // 1 
@@ -115,8 +117,11 @@ public class SpaGwtJava implements EntryPoint {
     WebAppController cntrl = new WebAppController(CTable);
     cntrl.loadPeopleList();
 
+    //setWidget(new ScrollPanel(vPanel));
+
+//    VerticalPanel mvp = CTable.GetTabPanel();
     RootPanel.get("errorLabelContainer").add(errorLabel);
-    RootPanel.get("TableContainer").add(tab);
+//    RootPanel.get("TableContainer").add(new ScrollPanel(mvp));
 
     // Focus the cursor on the name field when the app loads
 //    nameField.setFocus(true);

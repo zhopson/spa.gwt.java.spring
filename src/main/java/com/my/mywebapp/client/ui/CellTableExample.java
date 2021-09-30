@@ -13,6 +13,9 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.cellview.client.SimplePager;
+import com.google.gwt.user.client.ui.ScrollPanel;
 
 import com.my.mywebapp.shared.models.PeopleList;
 import com.my.mywebapp.client.controller.WebAppController;
@@ -36,6 +39,8 @@ public class CellTableExample {
         private ListDataProvider<PeopleList> dataProvider;
 
         private HandlerRegistration sortHandler;
+
+        private VerticalPanel vPanel;
 
 	public CellTableExample() {
 
@@ -151,7 +156,6 @@ public class CellTableExample {
                     }
                 }
                 //Window.alert(str);
-
 		Sid = 0;
 		Ssurname = "";
 		Sname = "";
@@ -165,6 +169,10 @@ public class CellTableExample {
 
 	public ListDataProvider<PeopleList> GetDataProvider() {
 		return dataProvider;
+	}
+
+	public VerticalPanel GetTabPanel() {
+		return vPanel;
 	}
 
         public void AddSorting(){
@@ -193,6 +201,17 @@ public class CellTableExample {
 
 		// We know that the data is sorted alphabetically by default.
 		table.getColumnSortList().push(table.getColumn(0));
+
+                RootPanel.get("TableContainer").clear();
+                if (vPanel!= null) vPanel.clear();
+                SimplePager pager = new SimplePager();
+                pager.setDisplay(table);
+                pager.setPageSize(10); // 20 rows will be shown at a time
+
+                vPanel = new VerticalPanel();
+                vPanel.add(table);
+                vPanel.add(pager);
+                RootPanel.get("TableContainer").add(new ScrollPanel(vPanel));
 
         }
 
