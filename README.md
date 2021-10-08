@@ -1,16 +1,16 @@
 SPA GWT SPRING BOOT Test APP
 ============================
 
-Используется
+РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ
 GWT
 Spring boot
 Hibernate
 Postgres
 Maven
 
-Запуск на Glassfish
-В pom.xml
-раскоментировать '<exclusions>'
+Р—Р°РїСѓСЃРє РЅР° Glassfish
+Р’ pom.xml
+СЂР°СЃРєРѕРјРµРЅС‚РёСЂРѕРІР°С‚СЊ '<exclusions>'
 
 	<dependencies>
 		<dependency>
@@ -24,29 +24,29 @@ Maven
 			</exclusions>-->
 		</dependency>
         <dependency>
-Glassfish использует конфиг
+Glassfish РёСЃРїРѕР»СЊР·СѓРµС‚ РєРѕРЅС„РёРі
 src\main\resources\application.properties
 
 
-Запуск на Tomcat 9 (Tomcat 10 не поддерживает жанный проект)
-В pom.xml
-в том же разделе (см. выше)
-закоментировать '<exclusions>'
-Tomcat использует конфиг
+Р—Р°РїСѓСЃРє РЅР° Tomcat 9 (Tomcat 10 РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚ Р¶Р°РЅРЅС‹Р№ РїСЂРѕРµРєС‚)
+Р’ pom.xml
+РІ С‚РѕРј Р¶Рµ СЂР°Р·РґРµР»Рµ (СЃРј. РІС‹С€Рµ)
+Р·Р°РєРѕРјРµРЅС‚РёСЂРѕРІР°С‚СЊ '<exclusions>'
+Tomcat РёСЃРїРѕР»СЊР·СѓРµС‚ РєРѕРЅС„РёРі
 src\main\java\com\my\mywebapp\server\ServerApplication.java
 '@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})'
-(автоконфигурация Spring)
+(Р°РІС‚РѕРєРѕРЅС„РёРіСѓСЂР°С†РёСЏ Spring)
 
 
-Сборка проекта стандартная
+РЎР±РѕСЂРєР° РїСЂРѕРµРєС‚Р° СЃС‚Р°РЅРґР°СЂС‚РЅР°СЏ
 mvn clean package
-или
+РёР»Рё
 mvn clean install -U
-(для обновления зависимостей)
+(РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ Р·Р°РІРёСЃРёРјРѕСЃС‚РµР№)
 
-или
+РёР»Рё
 
-запуск в докере
+Р·Р°РїСѓСЃРє РІ РґРѕРєРµСЂРµ
 docker-compose build
 docker-compose up -d
 
