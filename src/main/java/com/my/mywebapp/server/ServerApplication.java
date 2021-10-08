@@ -8,9 +8,10 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 @Configuration
-@EnableAutoConfiguration
+@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 @ComponentScan("com.my.mywebapp.server")
 public class ServerApplication {
 

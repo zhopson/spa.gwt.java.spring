@@ -1,0 +1,33 @@
+# version docker-compose
+version: '3.1'
+services:
+
+    app:
+        container_name: app-springbootgwt-postgresql
+        image: app-springbootgwt-postgresql
+        build: ./
+        # ports
+        ports:
+            - "8080:8080"
+        # mount dirs, left - host machine, right - in container
+        depends_on:
+             - dbpostgresql
+        links:
+            - dbpostgresql
+
+    dbpostgresql:
+        image: postgres
+        ports:
+            - "5432:5432"
+#        volumes:
+ #           - ./postgres/pgdata:/var/lib/postgresql/data/pgdata
+
+        env_file:
+            - env.list
+
+#        environment:
+#           - POSTGRES_PASSWORD=123qwe
+#            - POSTGRES_USER=ruser
+#            - POSTGRES_DB=services
+#            - PGDATA=/var/lib/postgresql/data/pgdata
+

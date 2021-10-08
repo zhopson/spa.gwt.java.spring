@@ -6,25 +6,25 @@
 --
 
 
-INSERT INTO work.public.peoples(id, name, patronymic, surname) VALUES
-(1, E'Михайл', E'Саввич', E'Тукшов');
-INSERT INTO work.public.peoples(id, name, patronymic, surname) VALUES
-(3, E'Александр', E'Иванович', E'Покрышкин');
-INSERT INTO work.public.peoples(id, name, patronymic, surname) VALUES
-(4, E'Александр', E'Семенович', E'Горбунков');
-INSERT INTO work.public.peoples(id, name, patronymic, surname) VALUES
-(5, E'Дмитрий', E'Андреевич', E'Джанибеков');
-INSERT INTO work.public.peoples(id, name, patronymic, surname) VALUES
-(8, E'Андрей', E'Николаевич', E'Песков');
-INSERT INTO work.public.peoples(id, name, patronymic, surname) VALUES
-(15, E'Михаил', E'Андреевич', E'Авдеев');
-INSERT INTO work.public.peoples(id, name, patronymic, surname) VALUES
-(13, E'Валентина', E'Прокопьевна', E'Ушкарева');
-INSERT INTO work.public.peoples(id, name, patronymic, surname) VALUES
-(6, E'Владимир', E'Абрамович', E'Яковлев');
-INSERT INTO work.public.peoples(id, name, patronymic, surname) VALUES
-(10, E'Альберт', E'Александрович', E'Мазжерин');
-INSERT INTO work.public.peoples(id, name, patronymic, surname) VALUES
-(2, E'Анатолий', E'Григорьевич', E'Мухамедшин');
-INSERT INTO work.public.peoples(id, name, patronymic, surname) VALUES
-(19, E'Илья', E'Петрович', E'Герасимов');
+INSERT INTO work.public.peoples(name, patronymic, surname) VALUES
+(E'Михайл', E'Саввич', E'Тукшов');
+INSERT INTO work.public.peoples(name, patronymic, surname) VALUES
+(E'Александр', E'Иванович', E'Покрышкин');
+INSERT INTO work.public.peoples(name, patronymic, surname) VALUES
+(E'Александр', E'Семенович', E'Горбунков');
+INSERT INTO work.public.peoples(name, patronymic, surname) VALUES
+(E'Дмитрий', E'Андреевич', E'Джанибеков');
+INSERT INTO work.public.peoples(name, patronymic, surname) VALUES
+(E'Андрей', E'Николаевич', E'Песков');
+INSERT INTO work.public.peoples(name, patronymic, surname) VALUES
+(E'Михаил', E'Андреевич', E'Авдеев');
+INSERT INTO work.public.peoples(name, patronymic, surname) VALUES
+(E'Валентина', E'Прокопьевна', E'Ушкарева');
+INSERT INTO work.public.peoples(name, patronymic, surname) VALUES
+(E'Владимир', E'Абрамович', E'Яковлев');
+INSERT INTO work.public.peoples(name, patronymic, surname) VALUES
+(E'Альберт', E'Александрович', E'Мазжерин');
+INSERT INTO work.public.peoples(name, patronymic, surname) VALUES
+(E'Анатолий', E'Григорьевич', E'Мухамедшин');
+INSERT INTO work.public.peoples(name, patronymic, surname) VALUES
+(E'Илья', E'Петрович', E'Герасимов');

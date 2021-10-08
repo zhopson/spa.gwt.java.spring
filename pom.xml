@@ -23,7 +23,7 @@
 		<java.version>1.8</java.version>
 <!--        <jetty.version>9.4.43.v20210629</jetty.version>-->
 
-		<gwtVersion>2.8.0</gwtVersion>
+		<gwtVersion>2.9.0</gwtVersion>
 <!--		<googleGin>2.1.2</googleGin>-->
 		<outputFolder>${project.build.directory}/${project.artifactId}</outputFolder>
 	</properties>
@@ -32,12 +32,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<exclusions>
+<!--			<exclusions>
 				<exclusion>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-starter-tomcat</artifactId>
 				</exclusion>
-			</exclusions>
+			</exclusions>-->
 		</dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
