@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.my.mywebapp.shared.models.PeopleList;
+//import com.my.mywebapp.shared.models.People;
 import com.my.mywebapp.client.json.JsonHelper;
 import com.my.mywebapp.client.ui.CellTableExample;
 
@@ -168,6 +169,36 @@ public class WebAppController {
 //                                    tab.setRowCount(lst.size()-1, true);
 //                                    tab.redraw();
 //                                    Window.alert("row count = " + tab.getRowCount());
+				}
+                            //Window.alert("response statusCode = " + response.getStatusCode());
+			}
+		});
+		try {
+			rb.send();
+		} catch (RequestException e) {
+			e.printStackTrace();
+			Window.alert("error = " + e.getMessage());
+		}
+
+    }
+
+    public void fillDBfakeData() {
+
+		String pageBaseUrl = GWT.getHostPageBaseURL();
+		// String baseUrl = GWT.getModuleBaseURL();
+		RequestBuilder rb = new RequestBuilder(RequestBuilder.POST, pageBaseUrl + "rest/fill/");
+                rb.setHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+		rb.setCallback(new RequestCallback() {
+
+			public void onError(Request request, Throwable e) {
+				// some error handling code here
+				Window.alert("error = " + e.getMessage());
+			}
+
+			public void onResponseReceived(Request request, Response response) {
+				if (201 == response.getStatusCode()) {
+                                    loadPeopleList();
 				}
                             //Window.alert("response statusCode = " + response.getStatusCode());
 			}

@@ -3,6 +3,7 @@ package com.my.mywebapp.client;
 import com.my.mywebapp.shared.FieldVerifier;
 import com.my.mywebapp.client.ui.CellTableExample;
 import com.my.mywebapp.shared.models.PeopleList;
+//import com.my.mywebapp.shared.models.People;
 import com.my.mywebapp.client.controller.WebAppController;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -12,6 +13,8 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+//import com.google.gwt.event.dom.client.KeyPressEvent;
+//import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -29,6 +32,8 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.ArrayList;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
@@ -37,9 +42,9 @@ public class SpaGwtJava implements EntryPoint {
    * The message displayed to the user when the server cannot be reached or
    * returns an error.
    */
-  private static final String SERVER_ERROR = "An error occurred while "
-      + "attempting to contact the server. Please check your network "
-      + "connection and try again.";
+//  private static final String SERVER_ERROR = "An error occurred while "
+//      + "attempting to contact the server. Please check your network "
+//      + "connection and try again.";
 
   /**
    * Create a remote service proxy to talk to the server-side Greeting service.
@@ -58,6 +63,7 @@ public class SpaGwtJava implements EntryPoint {
     final Button EditButton = new Button("Изменить данные");
     final Button DelButton = new Button("Удалить");
     final Button cancelButton = new Button("Отмена");
+    final Button fillButton = new Button("Сгенерировать 25 записей");
     
     final TextBox surnameField = new TextBox();
     surnameField.setText("Петров");
@@ -65,6 +71,10 @@ public class SpaGwtJava implements EntryPoint {
     nameField.setText("Петр");
     final TextBox patrField = new TextBox();
     patrField.setText("Петрович");
+    final TextBox searchField = new TextBox();
+    searchField.getElement().setPropertyString("placeholder", "Поиск по всем полям");
+    //searchField.setText("Поиск");
+
     
     final Label errorLabel = new Label();
     final Label cLabel = new Label();
@@ -80,6 +90,8 @@ public class SpaGwtJava implements EntryPoint {
     EditButton.addStyleName("sendButton");
     DelButton.addStyleName("sendButton");
     cancelButton.addStyleName("sendButton");
+    fillButton.addStyleName("sendButton");
+
     newLabel.addStyleName("headerText");
     editLabel.addStyleName("headerText");
 
@@ -121,6 +133,14 @@ public class SpaGwtJava implements EntryPoint {
 
 //    VerticalPanel mvp = CTable.GetTabPanel();
     RootPanel.get("errorLabelContainer").add(errorLabel);
+
+    final HorizontalPanel hp2 = new HorizontalPanel();
+    hp2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+    hp2.add(searchField);
+    hp2.add(fillButton);
+
+    RootPanel.get("leftToolsContainer").add(hp2);
+
 //    RootPanel.get("TableContainer").add(new ScrollPanel(mvp));
 
     // Focus the cursor on the name field when the app loads
@@ -244,6 +264,62 @@ public class SpaGwtJava implements EntryPoint {
         }
       }
     });
+    // Add a handler to fille base with some people
+    fillButton.addClickHandler(new ClickHandler() {
+      public void onClick(ClickEvent event) {
+
+        cntrl.fillDBfakeData();
+
+        RootPanel.get("EditFormContainer").clear();
+        RootPanel.get("opLabelContainer").clear();
+      }
+    });
+
+    searchField.addKeyUpHandler(new KeyUpHandler() {
+      public void onKeyUp(KeyUpEvent event) {
+//        if (!Character.isDigit(event.getCharCode())) {
+//          ((TextBox) event.getSource()).cancelKey();
+//        }
+//            String msg = "Search text: ";
+            //Window.alert("edit search: " + event.event.getCharCode());       
+//            errorLabel.setText(msg + event.getCharCode());
+
+            ListDataProvider<PeopleList> dataProvider =  CTable.GetDataProvider();
+            List<PeopleList> list = dataProvider.getList();
+//            PeopleList match = list.stream().findFirst(u -> u.getSurname().equals(CTable.GetSsurname())).get();
+            List<PeopleList> listFull = cntrl.GetList();
+
+            String matchExp = ".*" + searchField.getText() + ".*";
+            List<PeopleList> match = listFull.stream().filter( 
+                u -> 
+                   u.getSurname().matches(matchExp) 
+                || u.getName().matches(matchExp) 
+                || u.getPatronymic().matches(matchExp) )
+                .collect(Collectors.toList());
+            //Window.alert("match: " + match);
+//            if (!match.isEmpty()) {
+//                list = match;
+//                dataProvider.refresh();
+                    list.clear(); 
+                    for (PeopleList contact : match) {
+                            list.add(contact);
+                            //str = str + contact.getSurname();
+                    }
+//                errorLabel.setText(""); 
+//            }
+//            else { 
+//                if (searchField.getText()!="") errorLabel.setText(searchField.getText() + " не найдено");
+//                else  errorLabel.setText("");
+//                list.clear(); 
+//            }
+
+//        if (event.getNativeKeyCode() == KeyCodes.KEY_BACKSPACE) {
+//          Window.alert("Backspace pressed!");
+//        }
+            
+      }
+    });
+    
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 

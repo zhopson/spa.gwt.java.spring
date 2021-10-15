@@ -16,6 +16,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.TextBox;
 
 import com.my.mywebapp.shared.models.PeopleList;
 import com.my.mywebapp.client.controller.WebAppController;
@@ -160,7 +161,6 @@ public class CellTableExample {
 		Ssurname = "";
 		Sname = "";
 		Spatr = "";
-
         }
 
 	public CellTable GetTable() {

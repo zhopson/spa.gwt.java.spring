@@ -2,10 +2,12 @@ FROM maven:latest AS MAVEN_BUILD
 #FROM maven:3.6.1-jdk-8-alpine AS MAVEN_BUILD
 
 # copy the pom and src code to the container
-COPY ./ ./
+#COPY ./ ./
+COPY ./target/*.war ./target/gwt-spring-boot.war
  
 # package our application code
-RUN mvn clean package -DskipTests=true
+#Better run 'mvn clean package' before starting containers because compiling project gets a long time...
+#RUN mvn clean package -DskipTests=true
 RUN ls -al target
 #RUN pwd
 

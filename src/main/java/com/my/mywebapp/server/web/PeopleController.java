@@ -63,5 +63,49 @@ public class PeopleController {
         People ppp = peopleService.findPeople(id);
         peopleService.deletePeople(ppp);
     }
+    @RequestMapping(value = "/rest/fill/",method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void fill() {
+
+        List<People> fakeList = new ArrayList<People>(25);
+
+        fakeList.add(new People("Стручков","Петр","Акимович"));
+        fakeList.add(new People("Халтурин","Семен","Евгеньевич"));
+        fakeList.add(new People("Кривошапкин","Андрей","Петрович"));
+        fakeList.add(new People("Пахомов","Леонид","Александрович"));
+        fakeList.add(new People("Колодезников","Павел","Михайлович"));
+        fakeList.add(new People("Мухоморов","Константин","Владимирович"));
+        fakeList.add(new People("Панин","Александр","Сергеевич"));
+        fakeList.add(new People("Степанов","Андрей","Андреевич"));
+        fakeList.add(new People("Ильин","Егор","Петрович"));
+        fakeList.add(new People("Александров","Анатолий","Сергеевич"));
+        fakeList.add(new People("Верников","Игорь","Дмитриевич"));
+        fakeList.add(new People("Караклов","Владимир","Леонидович"));
+        fakeList.add(new People("Горидзе","Александр","Алексеевич"));
+        fakeList.add(new People("Фатеев","Илларион","Петрович"));
+        fakeList.add(new People("Файзулин","Антон","Николаевич"));
+        fakeList.add(new People("Андреев","Никита","Тихонович"));
+        fakeList.add(new People("Михалков","Павел","Сергеевич"));
+        fakeList.add(new People("Михайлов","Валерий","Александрович"));
+        fakeList.add(new People("Дубинников","Юрий","Юрьевич"));
+        fakeList.add(new People("Хренников","Сергей","Андреевич"));
+        fakeList.add(new People("Левченко","Вениамин","Вячеславович"));
+        fakeList.add(new People("Богучаров","Потап","Константинович"));
+        fakeList.add(new People("Уваров","Михаил","Петрович"));
+        fakeList.add(new People("Кислицын","Андрей","Владимирович"));
+        fakeList.add(new People("Костин","Евгений","Анатольевич"));
+
+        for (People item:fakeList) {
+
+//            String surnameToServer  = item.getSurname();
+//            String nameToServer     = item.getName();
+//            String patrToServer     = item.getPatronymic();
+
+            peopleService.savePeople(item);
+
+           
+        }
+
+    }
 
 }
