@@ -132,6 +132,7 @@ public class CellTableExample {
 
                 searchField = new TextBox();
                 searchField.getElement().setPropertyString("placeholder", "Поиск по всем полям");
+                searchField.addStyleName("SField");
 
 		// Add it to the root panel.
 		// RootPanel.get("TableContainer").add(table);

@@ -87,7 +87,7 @@ public class SpaGwtJava implements EntryPoint {
     EditButton.addStyleName("sendButton");
     DelButton.addStyleName("sendButton");
     cancelButton.addStyleName("sendButton");
-    fillButton.addStyleName("sendButton");
+    fillButton.addStyleName("fillButton");
 
     newLabel.addStyleName("headerText");
     editLabel.addStyleName("headerText");
@@ -132,11 +132,12 @@ public class SpaGwtJava implements EntryPoint {
 //    VerticalPanel mvp = CTable.GetTabPanel();
     RootPanel.get("errorLabelContainer").add(errorLabel);
 
-    final HorizontalPanel hp2 = new HorizontalPanel();
-    hp2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-    hp2.add(fillButton);
-
-    RootPanel.get("leftToolsContainer").add(hp2);
+//    final HorizontalPanel hp2 = new HorizontalPanel();
+//    hp2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+//    hp2.add(fillButton);
+//
+//    RootPanel.get("leftToolsContainer").add(hp2);
+    RootPanel.get("leftToolsContainer").add(fillButton);
 
 //    RootPanel.get("TableContainer").add(new ScrollPanel(mvp));
 

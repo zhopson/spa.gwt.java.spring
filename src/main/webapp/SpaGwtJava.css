@@ -20,7 +20,20 @@ h1 {
   display: block;
   font-size: 16pt;
 }
-
+.fillButton {
+  display: block;
+  font-size: 16pt;
+  width: 100%;
+  float: left;
+  box-sizing: border-box;
+}
+.SField {
+  display: block;
+/*  font-size: 16pt;*/
+  width: 100%;
+  float: left;
+  box-sizing: border-box;
+}
 /** Most GWT widgets already have a style name defined */
 .gwt-DialogBox {
   width: 400px;
