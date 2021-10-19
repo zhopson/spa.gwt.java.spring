@@ -32,7 +32,7 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import java.util.List;
-import java.util.stream.Collectors;
+//import java.util.stream.Collectors;
 import java.util.ArrayList;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -49,7 +49,7 @@ public class SpaGwtJava implements EntryPoint {
   /**
    * Create a remote service proxy to talk to the server-side Greeting service.
    */
-  private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
+//  private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 
     private boolean IsEditMode = false;
 
@@ -71,9 +71,6 @@ public class SpaGwtJava implements EntryPoint {
     nameField.setText("Петр");
     final TextBox patrField = new TextBox();
     patrField.setText("Петрович");
-    final TextBox searchField = new TextBox();
-    searchField.getElement().setPropertyString("placeholder", "Поиск по всем полям");
-    //searchField.setText("Поиск");
 
     
     final Label errorLabel = new Label();
@@ -115,7 +112,7 @@ public class SpaGwtJava implements EntryPoint {
     hp1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
     hp1.add(sendButton);
     hp1.add(cancelButton);
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////
     final CellTableExample CTable = new CellTableExample();
     //CellTable tab = CTable.GetTable();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -128,6 +125,7 @@ public class SpaGwtJava implements EntryPoint {
 // Получение Списка сотрудников с БД
     WebAppController cntrl = new WebAppController(CTable);
     cntrl.loadPeopleList();
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //setWidget(new ScrollPanel(vPanel));
 
@@ -136,7 +134,6 @@ public class SpaGwtJava implements EntryPoint {
 
     final HorizontalPanel hp2 = new HorizontalPanel();
     hp2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-    hp2.add(searchField);
     hp2.add(fillButton);
 
     RootPanel.get("leftToolsContainer").add(hp2);
@@ -182,6 +179,8 @@ public class SpaGwtJava implements EntryPoint {
 ////        CTable.InitTableExample(cntrl.GetList());
 //      }
 //    });
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     // Add a handler to show new form
     NewButton.addClickHandler(new ClickHandler() {
       public void onClick(ClickEvent event) {
@@ -274,52 +273,6 @@ public class SpaGwtJava implements EntryPoint {
         RootPanel.get("opLabelContainer").clear();
       }
     });
-
-    searchField.addKeyUpHandler(new KeyUpHandler() {
-      public void onKeyUp(KeyUpEvent event) {
-//        if (!Character.isDigit(event.getCharCode())) {
-//          ((TextBox) event.getSource()).cancelKey();
-//        }
-//            String msg = "Search text: ";
-            //Window.alert("edit search: " + event.event.getCharCode());       
-//            errorLabel.setText(msg + event.getCharCode());
-
-            ListDataProvider<PeopleList> dataProvider =  CTable.GetDataProvider();
-            List<PeopleList> list = dataProvider.getList();
-//            PeopleList match = list.stream().findFirst(u -> u.getSurname().equals(CTable.GetSsurname())).get();
-            List<PeopleList> listFull = cntrl.GetList();
-
-            String matchExp = ".*" + searchField.getText() + ".*";
-            List<PeopleList> match = listFull.stream().filter( 
-                u -> 
-                   u.getSurname().matches(matchExp) 
-                || u.getName().matches(matchExp) 
-                || u.getPatronymic().matches(matchExp) )
-                .collect(Collectors.toList());
-            //Window.alert("match: " + match);
-//            if (!match.isEmpty()) {
-//                list = match;
-//                dataProvider.refresh();
-                    list.clear(); 
-                    for (PeopleList contact : match) {
-                            list.add(contact);
-                            //str = str + contact.getSurname();
-                    }
-//                errorLabel.setText(""); 
-//            }
-//            else { 
-//                if (searchField.getText()!="") errorLabel.setText(searchField.getText() + " не найдено");
-//                else  errorLabel.setText("");
-//                list.clear(); 
-//            }
-
-//        if (event.getNativeKeyCode() == KeyCodes.KEY_BACKSPACE) {
-//          Window.alert("Backspace pressed!");
-//        }
-            
-      }
-    });
-    
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -11,12 +11,16 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
+import com.google.gwt.view.client.SelectionModel;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
+import java.util.stream.Collectors;
 
 import com.my.mywebapp.shared.models.PeopleList;
 import com.my.mywebapp.client.controller.WebAppController;
@@ -42,6 +46,8 @@ public class CellTableExample {
         private HandlerRegistration sortHandler;
 
         private VerticalPanel vPanel;
+
+        private TextBox searchField;
 
 	public CellTableExample() {
 
@@ -124,8 +130,54 @@ public class CellTableExample {
 			}
 		});
 
+                searchField = new TextBox();
+                searchField.getElement().setPropertyString("placeholder", "Поиск по всем полям");
+
 		// Add it to the root panel.
 		// RootPanel.get("TableContainer").add(table);
+                searchField.addKeyUpHandler(new KeyUpHandler() {
+                  public void onKeyUp(KeyUpEvent event) {
+            //        if (!Character.isDigit(event.getCharCode())) {
+            //          ((TextBox) event.getSource()).cancelKey();
+            //        }
+            //            String msg = "Search text: ";
+                        //Window.alert("edit search: " + event.event.getCharCode());       
+            //            errorLabel.setText(msg + event.getCharCode());
+
+                        List<PeopleList> list = dataProvider.getList();
+            //            PeopleList match = list.stream().findFirst(u -> u.getSurname().equals(CTable.GetSsurname())).get();
+                        List<PeopleList> listFull = peopleList;
+
+                        String matchExp = ".*" + searchField.getText() + ".*";
+                        List<PeopleList> match = listFull.stream().filter( 
+                            u -> 
+                               u.getSurname().matches(matchExp) 
+                            || u.getName().matches(matchExp) 
+                            || u.getPatronymic().matches(matchExp) )
+                            .collect(Collectors.toList());
+                        //Window.alert("match: " + match);
+
+                                list.clear(); 
+                                for (PeopleList contact : match) {
+                                        list.add(contact);
+                                        //str = str + contact.getSurname();
+                                }
+
+            //        if (event.getNativeKeyCode() == KeyCodes.KEY_BACKSPACE) {
+            //          Window.alert("Backspace pressed!");
+            //        }
+
+                        SingleSelectionModel<PeopleList> selectionModel = (SingleSelectionModel<PeopleList> )table.getSelectionModel();
+                        if (selectionModel.getSelectedObject()!=null) selectionModel.setSelected(selectionModel.getSelectedObject(),false);
+
+                        Sid = 0;
+                        Ssurname = "";
+                        Sname = "";
+                        Spatr = "";
+
+                  }
+                });
+
 	}
 
         public void InitTableExample(List<PeopleList> lst) {
@@ -161,6 +213,8 @@ public class CellTableExample {
 		Ssurname = "";
 		Sname = "";
 		Spatr = "";
+
+                searchField.setText("");
         }
 
 	public CellTable GetTable() {
@@ -209,11 +263,13 @@ public class CellTableExample {
                 pager.setPageSize(10); // 20 rows will be shown at a time
 
                 vPanel = new VerticalPanel();
+                vPanel.add(searchField);
                 vPanel.add(table);
                 vPanel.add(pager);
                 RootPanel.get("TableContainer").add(new ScrollPanel(vPanel));
 
         }
+
 
 //	public List<PeopleList> SetPeopleList() {
 //		return peopleList;

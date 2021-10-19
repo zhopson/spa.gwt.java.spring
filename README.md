@@ -28,7 +28,7 @@ Glassfish использует конфиг
 src\main\resources\application.properties
 
 
-Запуск на Tomcat 9 (Tomcat 10 не поддерживает жанный проект)
+Запуск на Tomcat 9 (Tomcat 10 не поддерживает данный проект)
 В pom.xml
 в том же разделе (см. выше)
 закоментировать '<exclusions>'

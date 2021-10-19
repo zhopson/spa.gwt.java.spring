@@ -17,10 +17,10 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
       <param-value>com.my.mywebapp.server.ServerApplication</param-value>
     </init-param>
   </servlet>
-  <servlet>
+<!--  <servlet>
     <servlet-name>greetServlet</servlet-name>
     <servlet-class>com.my.mywebapp.server.GreetingServiceImpl</servlet-class>
-  </servlet>
+  </servlet>-->
   <servlet>
     <servlet-name>peopleServlet</servlet-name>
     <servlet-class>com.my.mywebapp.server.web.PeopleController</servlet-class>
@@ -31,10 +31,10 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
     <servlet-name>gwt-boot</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
-  <servlet-mapping>
+<!--  <servlet-mapping>
     <servlet-name>greetServlet</servlet-name>
     <url-pattern>/spagwtjava/greet</url-pattern>
-  </servlet-mapping>
+  </servlet-mapping>-->
   <servlet-mapping>
     <servlet-name>peopleServlet</servlet-name>
 <!--    <url-pattern>/spagwtjava/rest/getall/</url-pattern>-->
